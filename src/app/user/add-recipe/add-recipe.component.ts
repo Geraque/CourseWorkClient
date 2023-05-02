@@ -34,14 +34,26 @@ export class AddRecipeComponent implements OnInit {
     return this.fb.group({
       recipeName: ['', Validators.compose([Validators.required])],
       description: ['', Validators.compose([Validators.required])],
+      calories: ['', Validators.compose([Validators.required])],
+      proteins: ['', Validators.compose([Validators.required])],
+      carbs: ['', Validators.compose([Validators.required])],
+      fat: ['', Validators.compose([Validators.required])],
     });
   }
 
   submit(): void {
 
+    const recipeNutrition = {
+      calories: this.recipeForm.value.calories,
+      proteins: this.recipeForm.value.proteins,
+      carbs: this.recipeForm.value.carbs,
+      fat: this.recipeForm.value.fat
+    };
+
     this.recipeService.createRecipe({
       recipeName: this.recipeForm.value.recipeName,
       description: this.recipeForm.value.description,
+      recipeNutrition: recipeNutrition
     }).subscribe(data => {
       this.createdRecipe = data;
       console.log(data);

@@ -2,19 +2,14 @@
   <div style="text-align: right">
     <button mat-flat-button color="primary" routerLink="/profile">My Recipes</button>
   </div>
-
   <h2>Create Recipe</h2>
   <form [formGroup]="recipeForm">
-
     <img class="recipe-image" [src]="previewImgURL || 'https://www.missingdogsuk.co.uk/wp-content/plugins/wp-job-manager-resumes/assets/images/candidate.png'" alt="user image">
-
     <input type="file"
            style="display: none"
            #fileInput
            (change)="onFileSelected($event)">
-
     <button mat-button (click)="fileInput.click()">Pick File</button>
-
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>recipeName</mat-label>
       <input matInput
@@ -25,11 +20,30 @@
       <input matInput
              formControlName="description">
     </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Calories</mat-label>
+        <input matInput
+               formControlName="calories">
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Proteins</mat-label>
+        <input matInput
+               formControlName="proteins">
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Carbs</mat-label>
+        <input matInput
+               formControlName="carbs">
+      </mat-form-field>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Fat</mat-label>
+        <input matInput
+               formControlName="fat">
+      </mat-form-field>
     <div style="text-align: right">
       <button mat-flat-button color="primary" [disabled]="recipeForm.invalid" (click)="submit()">
         Create Recipe
       </button>
     </div>
-
   </form>
 </div>

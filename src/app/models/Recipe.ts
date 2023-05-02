@@ -1,4 +1,5 @@
 import {Comment} from './Comment';
+import {RecipeNutrition} from './RecipeNutrition';
 
 export interface Recipe {
   recipeId?: number;
@@ -9,4 +10,5 @@ export interface Recipe {
   usersLiked?: string[];
   comments?: Comment [];
   username?: string;
+  recipeNutrition?: RecipeNutrition;
 }
