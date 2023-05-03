@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/User';
-import {TokenStorageService} from '../../service/token-storage.service';
-import {UserService} from '../../service/user.service';
-import {Router} from '@angular/router';
+import { User } from '../../models/User';
+import { TokenStorageService } from '../../service/token-storage.service';
+import { UserService } from '../../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -14,10 +14,13 @@ export class NavigationComponent implements OnInit {
   isLoggedIn = false;
   isDataLoaded = false;
   user: User;
+  searchTerm: string;
 
-  constructor(private tokenService: TokenStorageService,
-              private userService: UserService,
-              private router: Router) { }
+  constructor(
+    private tokenService: TokenStorageService,
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenService.getToken();
@@ -34,6 +37,15 @@ export class NavigationComponent implements OnInit {
   logout(): void {
     this.tokenService.logOut();
     this.router.navigate(['/login']);
+  }
+
+  onSearch(event): void {
+    event.preventDefault();
+
+    if (this.searchTerm) {
+      this.router.navigate(['/profile/', this.searchTerm]);
+      this.searchTerm = '';
+    }
   }
 
 }
