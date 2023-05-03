@@ -18,6 +18,7 @@ import { UserRecipesComponent } from './user/user-recipes/user-recipes.component
 import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { AddRecipeComponent } from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
+import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
     UserRecipesComponent,
     EditUserComponent,
     AddRecipeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UserProfileRecipesComponent
   ],
   imports: [
     BrowserModule,

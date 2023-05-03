@@ -8,6 +8,7 @@ import {ProfileComponent} from './user/profile/profile.component';
 import {UserRecipesComponent} from './user/user-recipes/user-recipes.component';
 import {AddRecipeComponent} from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
+import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -19,7 +20,11 @@ const routes: Routes = [
       {path: 'add', component: AddRecipeComponent, canActivate: [AuthGuardService]}
     ]
   },
-  { path: 'profile/:username', component: UserProfileComponent },
+  {
+    path: 'profile/:username', component: UserProfileComponent, children: [
+      {path: '', component: UserProfileRecipesComponent, canActivate: [AuthGuardService]}
+    ]
+   },
   {path: '', redirectTo: 'main', pathMatch: 'full'}
   ];
 

@@ -16,7 +16,8 @@ export class UserProfileComponent implements OnInit {
   userProfileImage: File;
   previewImgURL: any;
 
-  constructor(private userService: UserService, private route: ActivatedRoute,
+  constructor(private userService: UserService,
+              private route: ActivatedRoute,
               private imageService: ImageUploadService) {}
 
   ngOnInit(): void {

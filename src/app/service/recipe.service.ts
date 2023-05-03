@@ -25,6 +25,10 @@ export class RecipeService {
     return this.http.get(RECIPE_API + 'user/recipes');
   }
 
+  getRecipeForUsername(username: string): Observable<any> {
+    return this.http.post(RECIPE_API + username+'/recipes', null);
+  }
+
   deleteRecipe(id: number): Observable<any> {
     return this.http.post(RECIPE_API + id + '/delete', null);
   }
