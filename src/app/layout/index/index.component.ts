@@ -6,6 +6,7 @@ import {UserService} from '../../service/user.service';
 import {CommentService} from '../../service/comment.service';
 import {NotificationService} from '../../service/notification.service';
 import {ImageUploadService} from '../../service/image-upload.service';
+import {SaveRecipeService} from '../../service/save-recipe.service';
 
 @Component({
   selector: 'app-index',
@@ -18,13 +19,15 @@ export class IndexComponent implements OnInit {
   recipes: Recipe[];
   isUserDataLoaded = false;
   user: User;
+  isSaved: {[key: number]: boolean} = {};
 
-  constructor(private recipeService: RecipeService,
+constructor(private recipeService: RecipeService,
     private userService: UserService,
     private commentService: CommentService,
     private notificationService: NotificationService,
-    private imageService: ImageUploadService
-  ) { }
+    private imageService: ImageUploadService,
+    private saveRecipeService: SaveRecipeService //добавьте это
+) { }
 
   ngOnInit(): void {
     this.recipeService.getAllRecipes()
@@ -36,12 +39,13 @@ export class IndexComponent implements OnInit {
         this.isRecipesLoaded = true;
       });
 
-    this.userService.getCurrentUser()
-      .subscribe(data => {
-        console.log(data);
-        this.user = data;
-        this.isUserDataLoaded = true;
-      })
+  this.userService.getCurrentUser()
+    .subscribe(data => {
+      console.log(data);
+      this.user = data;
+      this.isUserDataLoaded = true;
+      this.recipes.forEach(recipe => this.checkIfRecipeIsSaved(recipe.recipeId));
+    });
   }
 
   getImagesToRecipes(recipes: Recipe[]): void {
@@ -100,4 +104,24 @@ export class IndexComponent implements OnInit {
     }
     return 'data:image/jpeg;base64,' + img;
   }
+
+ checkIfRecipeIsSaved(recipeId: number) {
+   this.saveRecipeService.isSaved(this.user.userId, recipeId).subscribe(resp => {
+     this.isSaved[recipeId] = resp.isSaved;
+   });
+ }
+ onFollowButtonClick(recipeId: number) {
+   if (this.isSaved[recipeId]) {
+     this.saveRecipeService.deleteRecipe(this.user.userId, recipeId).subscribe(() => {
+       this.isSaved[recipeId] = false;
+       this.notificationService.showSnackBar('Рецепт удален из коллекции');
+     });
+   } else {
+     this.saveRecipeService.saveRecipe(this.user.userId, recipeId).subscribe(() => {
+       this.isSaved[recipeId] = true;
+       this.notificationService.showSnackBar('Рецепт сохранен!');
+     });
+   }
+ }
+
 }

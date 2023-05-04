@@ -14,6 +14,10 @@
 
       <button *ngIf="isUserDataLoaded" mat-button (click)="likeRecipe(recipe.recipeId, i)" [ngClass]="recipe.usersLiked.indexOf(user.username) !== -1 ? 'is-liked' : 'not-liked'">
         <mat-icon>favorite</mat-icon> Like</button>
+
+      <button *ngIf="isUserDataLoaded" mat-button (click)="onFollowButtonClick(recipe.recipeId)" [ngClass]="{'btn-primary': !isSaved[recipe.recipeId], 'btn-danger': isSaved[recipe.recipeId]}" >
+        <mat-icon>bookmark</mat-icon>{{ isSaved[recipe.recipeId] ? 'Удалить из коллекции' : 'Сохранить рецепт' }}
+      </button>
     </mat-card-actions>
 
     <div style="text-align: left">
