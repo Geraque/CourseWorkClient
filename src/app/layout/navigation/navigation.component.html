@@ -10,8 +10,13 @@
 
   <span class="spacer"></span>
 
+
   <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button class="example-icon favorite-icon">
     <mat-icon>login</mat-icon>
+  </button>
+
+  <button *ngIf="isLoggedIn" matTooltip="Favorite" routerLink="/favorites" mat-icon-button class="example-icon favorite-icon">
+    <mat-icon>favorite</mat-icon>
   </button>
 
 

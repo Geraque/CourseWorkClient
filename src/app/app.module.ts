@@ -19,6 +19,7 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { AddRecipeComponent } from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
+import { FavouritesComponent } from './layout/favourites/favourites.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-
     EditUserComponent,
     AddRecipeComponent,
     UserProfileComponent,
-    UserProfileRecipesComponent
+    UserProfileRecipesComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,

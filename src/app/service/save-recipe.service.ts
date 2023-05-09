@@ -25,4 +25,8 @@ export class SaveRecipeService {
   isSaved(userId: number, recipeId: number): Observable<any> {
     return this.http.post(RECIPE_API + 'isSaved/'+ userId +'/'+recipeId, null);
   }
+
+  getRecipes(userId: number): Observable<any> {
+    return this.http.post(RECIPE_API + userId +'/recipes', null);
+  }
 }

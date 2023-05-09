@@ -9,11 +9,13 @@ import {UserRecipesComponent} from './user/user-recipes/user-recipes.component';
 import {AddRecipeComponent} from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
+import { FavouritesComponent } from './layout/favourites/favourites.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'main', component: IndexComponent, canActivate: [AuthGuardService]},
+  { path: 'favorites', component: FavouritesComponent, canActivate: [AuthGuardService] },
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService], children: [
       {path: '', component: UserRecipesComponent, canActivate: [AuthGuardService]},

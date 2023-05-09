@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {Recipe} from '../../models/Recipe';
-import {User} from '../../models/User';
-import {RecipeService} from '../../service/recipe.service';
-import {UserService} from '../../service/user.service';
-import {CommentService} from '../../service/comment.service';
-import {NotificationService} from '../../service/notification.service';
-import {ImageUploadService} from '../../service/image-upload.service';
-import {SaveRecipeService} from '../../service/save-recipe.service';
+import { Recipe } from '../../models/Recipe';
+import { User } from '../../models/User';
+import { RecipeService } from '../../service/recipe.service';
+import { UserService } from '../../service/user.service';
+import { CommentService } from '../../service/comment.service';
+import { NotificationService } from '../../service/notification.service';
+import { ImageUploadService } from '../../service/image-upload.service';
+import { SaveRecipeService } from '../../service/save-recipe.service';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  selector: 'app-favourites',
+  templateUrl: './favourites.component.html',
+  styleUrls: ['./favourites.component.css']
 })
-export class IndexComponent implements OnInit {
+export class FavouritesComponent implements OnInit {
 
   isRecipesLoaded = false;
   recipes: Recipe[];
@@ -21,31 +21,28 @@ export class IndexComponent implements OnInit {
   user: User;
   isSaved: {[key: number]: boolean} = {};
 
-constructor(private recipeService: RecipeService,
+  constructor(private recipeService: RecipeService,
     private userService: UserService,
     private commentService: CommentService,
     private notificationService: NotificationService,
     private imageService: ImageUploadService,
     private saveRecipeService: SaveRecipeService
-) { }
+  ) { }
 
   ngOnInit(): void {
-    this.recipeService.getAllRecipes()
+    this.userService.getCurrentUser()
       .subscribe(data => {
-        console.log(data);
-        this.recipes = data;
-        this.getImagesToRecipes(this.recipes);
-        this.getCommentsToRecipes(this.recipes);
-        this.isRecipesLoaded = true;
-      });
+        this.user = data;
+        this.isUserDataLoaded = true;
 
-  this.userService.getCurrentUser()
-    .subscribe(data => {
-      console.log(data);
-      this.user = data;
-      this.isUserDataLoaded = true;
-      this.recipes.forEach(recipe => this.checkIfRecipeIsSaved(recipe.recipeId));
-    });
+        this.saveRecipeService.getRecipes(this.user.userId)
+          .subscribe(data => {
+            this.recipes = data;
+            this.getImagesToRecipes(this.recipes);
+            this.getCommentsToRecipes(this.recipes);
+            this.isRecipesLoaded = true;
+          });
+      });
   }
 
   getImagesToRecipes(recipes: Recipe[]): void {
@@ -123,5 +120,4 @@ constructor(private recipeService: RecipeService,
      });
    }
  }
-
 }
