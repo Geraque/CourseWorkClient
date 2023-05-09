@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
-  <span routerLink="/main" style="cursor: pointer;margin-left: 20px;">courseWork</span>
+  <span routerLink="/main" style="cursor: pointer;margin-left: 20px;">Recipes</span>
+
+  <div class="spacer"></div>
 
   <form class="search-form" (submit)="onSearch($event)">
     <input type="text" placeholder="Search by username" [(ngModel)]="searchTerm" name="searchTerm">
@@ -7,9 +9,6 @@
       <mat-icon>search</mat-icon>
     </button>
   </form>
-
-  <span class="spacer"></span>
-
 
   <button *ngIf="!isLoggedIn" matTooltip="Login" routerLink="/login" mat-icon-button class="example-icon favorite-icon">
     <mat-icon>login</mat-icon>
