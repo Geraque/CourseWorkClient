@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Recipe} from '../../models/Recipe';
 import {User} from '../../models/User';
+import {Category} from '../../models/Category';
 import {RecipeService} from '../../service/recipe.service';
 import {UserService} from '../../service/user.service';
 import {CommentService} from '../../service/comment.service';
 import {NotificationService} from '../../service/notification.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {SaveRecipeService} from '../../service/save-recipe.service';
+import {CategoryService} from '../../service/category.service';
 
 @Component({
   selector: 'app-index',
@@ -20,13 +22,15 @@ export class IndexComponent implements OnInit {
   isUserDataLoaded = false;
   user: User;
   isSaved: {[key: number]: boolean} = {};
+  categoryNames: {[key: number]: string} = {};
 
 constructor(private recipeService: RecipeService,
     private userService: UserService,
     private commentService: CommentService,
     private notificationService: NotificationService,
     private imageService: ImageUploadService,
-    private saveRecipeService: SaveRecipeService
+    private saveRecipeService: SaveRecipeService,
+    private categoryService: CategoryService
 ) { }
 
   ngOnInit(): void {
@@ -38,6 +42,12 @@ constructor(private recipeService: RecipeService,
         this.getCommentsToRecipes(this.recipes);
         this.isRecipesLoaded = true;
       });
+
+  this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
+    categories.forEach((category) => {
+      this.categoryNames[category.categoryId] = category.categoryName;
+    });
+  });
 
   this.userService.getCurrentUser()
     .subscribe(data => {

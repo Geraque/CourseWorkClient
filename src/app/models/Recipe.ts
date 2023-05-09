@@ -1,4 +1,5 @@
 import {Comment} from './Comment';
+import {Category} from './Category';
 import {RecipeNutrition} from './RecipeNutrition';
 
 export interface Recipe {
@@ -11,4 +12,5 @@ export interface Recipe {
   comments?: Comment [];
   username?: string;
   recipeNutrition?: RecipeNutrition;
+  category?: Category;
 }
