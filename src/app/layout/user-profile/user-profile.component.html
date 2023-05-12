@@ -11,17 +11,14 @@
              #fileInput
              (change)="onFileSelected($event)">
     </div>
-    <div class="col" style="text-align: left">
-
+    <div class="col text-center">
+      <div>
+        <button *ngIf="myId && user && user.username && myId !== user.id && isUserDataLoaded" type="button" class="btn" [ngClass]="{'btn-primary': !isFollowing, 'btn-danger': isFollowing}" [(ngModel)]="isFollowing" (click)="onFollowButtonClick()">
+          {{ isFollowing ? 'Unfollow' : 'Follow' }}
+        </button>
+      </div>
       <h2>{{user.username}}</h2>
-
       <h3 style="font-style: italic">{{user.firstname}} {{user.lastname}}</h3>
-
-
-      <button *ngIf="myId && user && user.username && myId !== user.id && isUserDataLoaded" type="button" class="btn" [ngClass]="{'btn-primary': !isFollowing, 'btn-danger': isFollowing}" [(ngModel)]="isFollowing" (click)="onFollowButtonClick()">
-        {{ isFollowing ? 'Unfollow' : 'Follow' }}
-      </button>
-
     </div>
 
     <mat-divider style="margin: 2rem 0"></mat-divider>
