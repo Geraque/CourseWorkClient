@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
+import {MatSelectModule} from '@angular/material/select';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../../models/Recipe';
 import {RecipeService} from '../../service/recipe.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {NotificationService} from '../../service/notification.service';
 import {Router} from '@angular/router';
+import {CategoryService} from '../../service/category.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -18,16 +20,22 @@ export class AddRecipeComponent implements OnInit {
   isRecipeCreated = false;
   createdRecipe: Recipe;
   previewImgURL: any;
+  categories: any[];
+  selectedCategory: number;
 
   constructor(private recipeService: RecipeService,
               private imageUploadService: ImageUploadService,
               private notificationService: NotificationService,
               private router: Router,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private categoryService: CategoryService) {
   }
 
   ngOnInit(): void {
     this.recipeForm = this.createRecipeForm();
+    this.categoryService.getAllCategories().subscribe(data => {
+      this.categories = data;
+    });
   }
 
   createRecipeForm(): FormGroup {
@@ -77,6 +85,23 @@ export class AddRecipeComponent implements OnInit {
     reader.onload = (e) => {
       this.previewImgURL = reader.result;
     };
+  }
+
+  onCategorySelected(event): void {
+    this.selectedCategory = event.value;
+  }
+
+  addCategoryToRecipe(): void {
+  console.log(this.isRecipeCreated);
+  console.log(this.createdRecipe);
+  console.log(this.createdRecipe.recipeId);
+    if (this.createdRecipe && this.createdRecipe.recipeId != null) {
+      this.categoryService.addCategory(this.selectedCategory, this.createdRecipe.recipeId).subscribe(() => {
+        this.notificationService.showSnackBar('Category added successfully');
+      });
+    } else {
+      this.notificationService.showSnackBar('Please create the recipe first');
+    }
   }
 
 }

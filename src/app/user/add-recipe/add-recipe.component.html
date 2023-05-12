@@ -40,6 +40,13 @@
         <input matInput
                formControlName="fat">
       </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Categories</mat-label>
+      <mat-select (selectionChange)="onCategorySelected($event)">
+        <mat-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-flat-button (click)="addCategoryToRecipe()" [disabled]="!selectedCategory">Add Category</button>
     <div style="text-align: right">
       <button mat-flat-button color="primary" [disabled]="recipeForm.invalid" (click)="submit()">
         Create Recipe
