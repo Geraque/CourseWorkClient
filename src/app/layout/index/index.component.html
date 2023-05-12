@@ -3,8 +3,10 @@
     <mat-card-header style="text-align: left">
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{recipe.recipeName}}</mat-card-title>
-      <mat-card-title>{{ categoryNames[recipe.categoryId] }}</mat-card-title>
     </mat-card-header>
+    <div *ngFor="let categoryId of recipe.categoryIds" style="margin-right: 9px;">
+      {{ categoryNames[categoryId] }}
+    </div>
     <img mat-card-image [src]="formatImage(recipe.image)" alt="recipe image">
     <mat-card-subtitle align="start">Recipe by {{recipe.username}}</mat-card-subtitle>
     <mat-card-content>

@@ -33,15 +33,16 @@ constructor(private recipeService: RecipeService,
     private categoryService: CategoryService
 ) { }
 
-  ngOnInit(): void {
-    this.recipeService.getAllRecipes()
-      .subscribe(data => {
-        console.log(data);
-        this.recipes = data;
-        this.getImagesToRecipes(this.recipes);
-        this.getCommentsToRecipes(this.recipes);
-        this.isRecipesLoaded = true;
-      });
+ngOnInit(): void {
+  this.recipeService.getAllRecipes()
+    .subscribe(data => {
+      console.log(data);
+      this.recipes = data;
+      this.getImagesToRecipes(this.recipes);
+      this.getCommentsToRecipes(this.recipes);
+      this.getCategoriesToRecipes(this.recipes);  // Add this line
+      this.isRecipesLoaded = true;
+    });
 
   this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
     categories.forEach((category) => {
@@ -133,5 +134,13 @@ constructor(private recipeService: RecipeService,
      });
    }
  }
-
+  getCategoriesToRecipes(recipes: Recipe[]): void {
+    recipes.forEach(recipe => {
+      this.categoryService.getCategoriesByRecipeId(recipe.recipeId)
+        .subscribe(categories => {
+          recipe.categoryIds = categories.map(category => category.categoryId);
+        });
+    });
+  }
 }
+

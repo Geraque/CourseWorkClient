@@ -20,4 +20,8 @@ export class CategoryService {
     getCategoryNameByCategoryId(categoryId: number): Observable<any> {
       return this.http.post(CATEGORY_API + 'name'+ categoryId,null);
     }
+
+    getCategoriesByRecipeId(recipeId: number): Observable<any> {
+      return this.http.post('http://localhost:8080/api/recipeCategory/all/'+ recipeId,null);
+    }
 }

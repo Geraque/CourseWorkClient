@@ -12,5 +12,5 @@ export interface Recipe {
   comments?: Comment [];
   username?: string;
   recipeNutrition?: RecipeNutrition;
-  category?: Category;
+  categoryIds?: number[];
 }
