@@ -15,7 +15,7 @@
     </mat-card-content>
 
     <div style="text-align: left">
-      <p *ngFor="let comment of recipe.comments; let c = index"><span style="font-weight: 500">{{comment.user.username}}</span>: {{comment.commentText}}
+      <p *ngFor="let comment of recipe.comments; let c = index"><span style="font-weight: 500">{{comment.username}}</span>: {{comment.commentText}}
       </p>
     </div>
 

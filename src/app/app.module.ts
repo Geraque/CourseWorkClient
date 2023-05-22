@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material/input';
 import {MaterialModule} from './material-module';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,6 +24,7 @@ import { AddRecipeComponent } from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 import { FavouritesComponent } from './layout/favourites/favourites.component';
+import { AdminComponent } from './auth/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { FavouritesComponent } from './layout/favourites/favourites.component';
     AddRecipeComponent,
     UserProfileComponent,
     UserProfileRecipesComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,8 @@ import { FavouritesComponent } from './layout/favourites/favourites.component';
     ReactiveFormsModule,
     MaterialModule,
     MatSelectModule,
+    MatCheckboxModule,
+    MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     HttpClientModule,

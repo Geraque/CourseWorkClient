@@ -11,6 +11,13 @@
     <mat-card-subtitle style ="margin:12px" align="start">Recipe by {{recipe.username}}</mat-card-subtitle>
     <mat-card-content>
       <p>{{recipe.description}}</p>
+      <button mat-button (click)="toggleNutritionPanel(recipe.recipeId)">Показать/скрыть информацию о питательных веществах</button>
+      <div *ngIf="showNutritionPanel[recipe.recipeId]" class="nutrition-panel">
+      <p>Калории: {{recipe.recipeNutrition.calories}}</p>
+      <p>Углеводы: {{recipe.recipeNutrition.carbs}}</p>
+      <p>Жиры: {{recipe.recipeNutrition.fat}}</p>
+      <p>Белки: {{recipe.recipeNutrition.proteins}}</p>
+      </div>
     </mat-card-content>
 
     <mat-card-actions align="start">
@@ -24,7 +31,7 @@
     </mat-card-actions>
 
     <div style="text-align: left">
-      <p *ngFor="let comment of recipe.comments"><span style="font-weight: 500">{{comment.user.username}}</span>: {{comment.commentText}}</p>
+      <p *ngFor="let comment of recipe.comments"><span style="font-weight: 500">{{comment.username}}</span>: {{comment.commentText}}</p>
     </div>
 
     <mat-form-field class="w-100">

@@ -18,7 +18,7 @@
     </mat-card-content>
 
     <div style="text-align: left">
-      <p *ngFor="let comment of recipe.comments; let c = index"><span style="font-weight: 500">{{comment.user.username}}</span>: {{comment.commentText}}
+      <p *ngFor="let comment of recipe.comments; let c = index"><span style="font-weight: 500">{{comment.username}}</span>: {{comment.commentText}}
         <button color="accent" mat-button (click)="deleteComment(comment.commentId, i, c)">
           <mat-icon color="accent">clear</mat-icon>
         </button>

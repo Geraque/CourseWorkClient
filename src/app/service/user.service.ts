@@ -26,4 +26,8 @@ export class UserService {
   getUserByUsername(username: string):Observable<any> {
     return this.http.post(USER_API +'get/'+ username,null);
   }
+
+  isAdmin(userId: number):Observable<any> {
+    return this.http.post(USER_API +'isAdmin/'+ userId,null);
+  }
 }

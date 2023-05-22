@@ -10,6 +10,7 @@ import {AddRecipeComponent} from './user/add-recipe/add-recipe.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 import { FavouritesComponent } from './layout/favourites/favourites.component';
+import { AdminComponent } from './auth/admin/admin.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -23,10 +24,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'profile/:username', component: UserProfileComponent, children: [
+    path: 'profile/:username', component: UserProfileComponent,canActivate: [AuthGuardService], children: [
       {path: '', component: UserProfileRecipesComponent, canActivate: [AuthGuardService]}
     ]
    },
+   { path: 'admin', component: AdminComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'}
   ];
 

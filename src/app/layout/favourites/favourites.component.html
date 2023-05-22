@@ -21,7 +21,7 @@
     </mat-card-actions>
 
     <div style="text-align: left">
-      <p *ngFor="let comment of recipe.comments"><span style="font-weight: 500">{{comment.user.username}}</span>: {{comment.commentText}}</p>
+      <p *ngFor="let comment of recipe.comments"><span style="font-weight: 500">{{comment.username}}</span>: {{comment.commentText}}</p>
     </div>
 
     <mat-form-field class="w-100">

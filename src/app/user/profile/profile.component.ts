@@ -7,6 +7,7 @@ import {NotificationService} from '../../service/notification.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {UserService} from '../../service/user.service';
 import {EditUserComponent} from '../edit-user/edit-user.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-profile',
@@ -75,5 +76,12 @@ export class ProfileComponent implements OnInit {
           this.notificationService.showSnackBar('Profile Image updated successfully');
         });
     }
+  }
+
+  downloadStats(): void {
+    this.recipeService.getStats(this.user.userId).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, 'user_stats.xlsx');
+    });
   }
 }

@@ -23,6 +23,7 @@ export class IndexComponent implements OnInit {
   user: User;
   isSaved: {[key: number]: boolean} = {};
   categoryNames: {[key: number]: string} = {};
+  showNutritionPanel: {[key: number]: boolean} = {};
 
 constructor(private recipeService: RecipeService,
     private userService: UserService,
@@ -40,7 +41,7 @@ ngOnInit(): void {
       this.recipes = data;
       this.getImagesToRecipes(this.recipes);
       this.getCommentsToRecipes(this.recipes);
-      this.getCategoriesToRecipes(this.recipes);  // Add this line
+      this.getCategoriesToRecipes(this.recipes);
       this.isRecipesLoaded = true;
     });
 
@@ -141,6 +142,14 @@ ngOnInit(): void {
           recipe.categoryIds = categories.map(category => category.categoryId);
         });
     });
+  }
+
+  toggleNutritionPanel(recipeId: number): void {
+    if (this.showNutritionPanel[recipeId]) {
+      this.showNutritionPanel[recipeId] = false;
+    } else {
+      this.showNutritionPanel[recipeId] = true;
+    }
   }
 }
 
