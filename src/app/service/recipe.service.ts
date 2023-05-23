@@ -38,7 +38,7 @@ export class RecipeService {
   }
 
   getStats(userId: number): Observable<any> {
-    return this.http.get(RECIPE_API + 'download/' + userId);
+    return this.http.get(RECIPE_API + 'download2');
   }
 
   getNutrition(nutritionId: number): Observable<any> {

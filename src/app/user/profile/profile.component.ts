@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
 
   downloadStats(): void {
     this.recipeService.getStats(this.user.userId).subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
       saveAs(blob, 'user_stats.xlsx');
     });
   }

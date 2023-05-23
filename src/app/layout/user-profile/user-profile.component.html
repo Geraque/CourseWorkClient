@@ -17,6 +17,10 @@
           {{ isFollowing ? 'Unfollow' : 'Follow' }}
         </button>
       </div>
+      <!-- Add followers count display here -->
+      <div>
+        <h4>Followers: {{followersCount}}</h4>
+      </div>
       <h2>{{user.username}}</h2>
       <h3 style="font-style: italic">{{user.firstname}} {{user.lastname}}</h3>
     </div>

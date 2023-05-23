@@ -22,4 +22,8 @@ export class FollowerService {
     isFollowing(followerId: string, userId: number):Observable<any> {
       return this.http.post(FOLLOWER_API +'isFollowing/'+ followerId+'/' + userId,null);
     }
+
+    countFollow(userId: number):Observable<any> {
+      return this.http.post(FOLLOWER_API +'countFollow/'+ userId,null);
+    }
 }

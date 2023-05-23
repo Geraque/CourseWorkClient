@@ -18,18 +18,19 @@ export class UserProfileComponent implements OnInit {
   previewImgURL: any;
   myId: string;
   isFollowing: boolean;
+  followersCount: number;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
               private imageService: ImageUploadService,
               private followerService: FollowerService,) {}
 
-ngOnInit(): void {
-    this.userService.getCurrentUser()
-      .subscribe(data => {
-        this.myId = data.userId;
-        this.isUserDataLoaded = true;
-      });
+  ngOnInit(): void {
+  this.userService.getCurrentUser()
+    .subscribe(data => {
+      this.myId = data.userId;
+      this.isUserDataLoaded = true;
+    });
 
   this.route.params.subscribe(params => {
     this.userService.getUserByUsername(params['username']).subscribe(data => {
@@ -39,8 +40,6 @@ ngOnInit(): void {
       console.log('My ID:', this.myId);
       console.log('User ID:', this.user.userId);
 
-      this.isUserDataLoaded = true;
-
       this.imageService.getSearchProfileImage(this.user.username).subscribe(data => {
         this.userProfileImage = data.imageBytes;
 
@@ -48,10 +47,17 @@ ngOnInit(): void {
       this.followerService.isFollowing(this.myId, this.user.userId).subscribe(resp => {
         this.isFollowing = resp.isFollowing;
       });
+
+      // Call countFollow method to get the count of followers
+      this.followerService.countFollow(this.user.userId).subscribe(resp => {
+        this.followersCount = resp;
+        console.log('followersCount:', this.followersCount);
+          });
+      this.isUserDataLoaded = true;
+        });
       });
     });
-  });
-}
+  }
 
   formatImage(img: any): any {
     if (img == null) {
