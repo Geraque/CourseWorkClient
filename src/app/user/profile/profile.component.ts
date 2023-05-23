@@ -50,8 +50,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         this.userProfileImage = data.imageBytes;
       });
-
-
   }
 
   onFileSelected(event): void {
@@ -90,9 +88,10 @@ export class ProfileComponent implements OnInit {
   }
 
   downloadStats(): void {
-    this.recipeService.getStats(this.user.userId).subscribe((data) => {
+    this.recipeService.getStats().subscribe((data) => {
+    console.log(this.user.userId)
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-      saveAs(blob, 'user_stats.xlsx');
+      saveAs(blob, 'recipes.xlsx');
     });
   }
 }

@@ -37,8 +37,8 @@ export class RecipeService {
     return this.http.post(RECIPE_API + id + '/' + username + '/like', null);
   }
 
-  getStats(userId: number): Observable<any> {
-    return this.http.get(RECIPE_API + 'download2');
+  getStats(): Observable<any> {
+    return this.http.get(RECIPE_API + 'download', { responseType: 'blob' });
   }
 
   getNutrition(nutritionId: number): Observable<any> {
