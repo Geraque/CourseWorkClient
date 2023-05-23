@@ -103,5 +103,4 @@ export class AddRecipeComponent implements OnInit {
       this.notificationService.showSnackBar('Please create the recipe first');
     }
   }
-
 }

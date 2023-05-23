@@ -1,6 +1,40 @@
 .post-image {
   display: block;
-  margin: 1rem auto;
+  margin: 1rem auto 0;
   width: 200px;
   height: 200px;
+}
+
+.calories-proteins-carbs-fat {
+  display: flex;
+  justify-content: space-between;
+}
+.calories-proteins-carbs-fat mat-form-field {
+  width: 23%;
+}
+
+.calories-proteins-carbs-fat mat-form-field:nth-child(4) {
+  margin-right: 0;
+}
+
+.calories-proteins-carbs-fat mat-form-field:nth-child(3) {
+  margin-right: 1%;
+}
+
+.calories-proteins-carbs-fat mat-form-field:nth-child(2) {
+  margin-right: 1%;
+}
+
+@media (max-width: 768px) {
+  .calories-proteins-carbs-fat {
+    flex-direction: column;
+  }
+
+  .calories-proteins-carbs-fat mat-form-field {
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: calc(100% - 24px);
+  }
 }

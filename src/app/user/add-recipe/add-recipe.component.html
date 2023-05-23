@@ -4,53 +4,44 @@
   </div>
   <h2>Create Recipe</h2>
   <form [formGroup]="recipeForm">
-    <img class="recipe-image" [src]="previewImgURL || 'https://www.missingdogsuk.co.uk/wp-content/plugins/wp-job-manager-resumes/assets/images/candidate.png'" alt="user image">
-    <input type="file"
-           style="display: none"
-           #fileInput
-           (change)="onFileSelected($event)">
-    <button mat-button (click)="fileInput.click()">Pick File</button>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field appearance="outline">
       <mat-label>recipeName</mat-label>
-      <input matInput
-             formControlName="recipeName">
+      <input matInput formControlName="recipeName">
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Description</mat-label>
-      <input matInput
-             formControlName="description">
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <img class="recipe-image post-image" [src]="previewImgURL || 'https://i.pinimg.com/originals/2c/0c/7e/2c0c7e4fb33f0d39f3c7573edc0cb68e.jpg'" alt="user image">
+  <input type="file" style="display: none" #fileInput (change)="onFileSelected($event)">
+  <button mat-button style="margin-top: 0.5rem" (click)="fileInput.click()">Pick File</button>
+  <mat-form-field class="w-100" appearance="outline" style="margin-top: 0.5rem;">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" rows="6"></textarea>
+  </mat-form-field>
+  <div class="calories-proteins-carbs-fat">
+    <mat-form-field class="w-25" appearance="outline">
+      <mat-label>Calories</mat-label>
+      <input matInput formControlName="calories">
     </mat-form-field>
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Calories</mat-label>
-        <input matInput
-               formControlName="calories">
-      </mat-form-field>
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Proteins</mat-label>
-        <input matInput
-               formControlName="proteins">
-      </mat-form-field>
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Carbs</mat-label>
-        <input matInput
-               formControlName="carbs">
-      </mat-form-field>
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Fat</mat-label>
-        <input matInput
-               formControlName="fat">
-      </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field class="w-25" appearance="outline">
+      <mat-label>Proteins</mat-label>
+      <input matInput formControlName="proteins">
+    </mat-form-field>
+    <mat-form-field class="w-25" appearance="outline">
+      <mat-label>Carbs</mat-label>
+      <input matInput formControlName="carbs">
+    </mat-form-field>
+    <mat-form-field class="w-25" appearance="outline">
+      <mat-label>Fat</mat-label>
+      <input matInput formControlName="fat">
+    </mat-form-field>
+  </div>
+  <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+    <mat-form-field class="w-75" appearance="outline" style="margin-top: 0.5rem;">
       <mat-label>Categories</mat-label>
       <mat-select (selectionChange)="onCategorySelected($event)">
         <mat-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-flat-button (click)="addCategoryToRecipe()" [disabled]="!selectedCategory">Add Category</button>
-    <div style="text-align: right">
-      <button mat-flat-button color="primary" [disabled]="recipeForm.invalid" (click)="submit()">
-        Create Recipe
-      </button>
-    </div>
-  </form>
+    <button mat-flat-button style="margin-left: 0.5rem;" (click)="addCategoryToRecipe()" [disabled]="!selectedCategory">Add Category</button>
+  </div>
+  <button mat-flat-button color="primary" [disabled]="recipeForm.invalid" (click)="submit()">Create Recipe</button>
 </div>
