@@ -119,7 +119,7 @@ ngOnInit(): void {
 
  checkIfRecipeIsSaved(recipeId: number) {
    this.saveRecipeService.isSaved(this.user.userId, recipeId).subscribe(resp => {
-     this.isSaved[recipeId] = resp.isSaved;
+     this.isSaved[recipeId] = resp;
    });
  }
  onFollowButtonClick(recipeId: number) {

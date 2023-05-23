@@ -45,7 +45,7 @@ export class UserProfileComponent implements OnInit {
 
         // Check if the IDs are not null or undefined before making the request
       this.followerService.isFollowing(this.myId, this.user.userId).subscribe(resp => {
-        this.isFollowing = resp.isFollowing;
+        this.isFollowing = resp;
       });
 
       // Call countFollow method to get the count of followers

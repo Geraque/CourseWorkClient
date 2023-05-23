@@ -25,3 +25,12 @@
     max-height: 80vh;
   }
 }
+
+#category{
+  margin:12px
+}
+
+/* Выравнивание заголовка по центру */
+.index-page h1 {
+  text-align: center;
+}

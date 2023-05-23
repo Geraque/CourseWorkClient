@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../../models/Recipe';
 import { User } from '../../models/User';
+import {Category} from '../../models/Category';
 import { RecipeService } from '../../service/recipe.service';
 import { UserService } from '../../service/user.service';
 import { CommentService } from '../../service/comment.service';
 import { NotificationService } from '../../service/notification.service';
 import { ImageUploadService } from '../../service/image-upload.service';
 import { SaveRecipeService } from '../../service/save-recipe.service';
+import {CategoryService} from '../../service/category.service';
 
 @Component({
   selector: 'app-favourites',
@@ -20,30 +22,39 @@ export class FavouritesComponent implements OnInit {
   isUserDataLoaded = false;
   user: User;
   isSaved: {[key: number]: boolean} = {};
+  categoryNames: {[key: number]: string} = {};
+  showNutritionPanel: {[key: number]: boolean} = {};
 
   constructor(private recipeService: RecipeService,
     private userService: UserService,
     private commentService: CommentService,
     private notificationService: NotificationService,
     private imageService: ImageUploadService,
-    private saveRecipeService: SaveRecipeService
+    private saveRecipeService: SaveRecipeService,
+    private categoryService: CategoryService
   ) { }
 
-  ngOnInit(): void {
-    this.userService.getCurrentUser()
-      .subscribe(data => {
-        this.user = data;
-        this.isUserDataLoaded = true;
+ngOnInit(): void {
+  this.userService.getCurrentUser()
+    .subscribe(data => {
+      this.user = data;
+      this.isUserDataLoaded = true;
 
-        this.saveRecipeService.getRecipes(this.user.userId)
-          .subscribe(data => {
-            this.recipes = data;
-            this.getImagesToRecipes(this.recipes);
-            this.getCommentsToRecipes(this.recipes);
-            this.isRecipesLoaded = true;
+      this.saveRecipeService.getRecipes(this.user.userId)
+        .subscribe(data => {
+          this.recipes = data;
+          this.getImagesToRecipes(this.recipes);
+          this.getCommentsToRecipes(this.recipes);
+          this.getCategoriesToRecipes(this.recipes);
+          this.isRecipesLoaded = true;
+
+          // Добавьте проверку на сохранение для каждого рецепта
+          this.recipes.forEach(recipe => {
+            this.checkIfRecipeIsSaved(recipe.recipeId);
           });
-      });
-  }
+        });
+    });
+}
 
   getImagesToRecipes(recipes: Recipe[]): void {
     recipes.forEach(p => {
@@ -104,9 +115,10 @@ export class FavouritesComponent implements OnInit {
 
  checkIfRecipeIsSaved(recipeId: number) {
    this.saveRecipeService.isSaved(this.user.userId, recipeId).subscribe(resp => {
-     this.isSaved[recipeId] = resp.isSaved;
+     this.isSaved[recipeId] = resp;
    });
  }
+
  onFollowButtonClick(recipeId: number) {
    if (this.isSaved[recipeId]) {
      this.saveRecipeService.deleteRecipe(this.user.userId, recipeId).subscribe(() => {
@@ -120,4 +132,21 @@ export class FavouritesComponent implements OnInit {
      });
    }
  }
+
+  getCategoriesToRecipes(recipes: Recipe[]): void {
+    recipes.forEach(recipe => {
+      this.categoryService.getCategoriesByRecipeId(recipe.recipeId)
+        .subscribe(categories => {
+          recipe.categoryIds = categories.map(category => category.categoryId);
+        });
+    });
+  }
+
+  toggleNutritionPanel(recipeId: number): void {
+    if (this.showNutritionPanel[recipeId]) {
+      this.showNutritionPanel[recipeId] = false;
+    } else {
+      this.showNutritionPanel[recipeId] = true;
+    }
+  }
 }
