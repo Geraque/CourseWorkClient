@@ -48,7 +48,6 @@ constructor(private userService: UserService,
     this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
       categories.forEach((category) => {
         this.categoryNames[category.categoryId] = category.categoryName;
-        console.log('categoryName:',category.categoryName)
       });
       this.isCategoriesLoaded = true; // добавить эту строку
     });
@@ -83,7 +82,6 @@ constructor(private userService: UserService,
   }
 
   removeRecipe(recipe: Recipe, index: number): void {
-    console.log(recipe);
     const result = confirm('Do you really want to delete this recipe?');
     if (result) {
       this.recipeService.deleteRecipe(recipe.recipeId)

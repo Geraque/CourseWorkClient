@@ -4,9 +4,10 @@ import {TokenStorageService} from '../../service/token-storage.service';
 import {RecipeService} from '../../service/recipe.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {NotificationService} from '../../service/notification.service';
+import {EditUserComponent} from '../edit-user/edit-user.component';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {UserService} from '../../service/user.service';
-import {EditUserComponent} from '../edit-user/edit-user.component';
+import {FollowerService} from '../../service/follower.service';
 import {saveAs} from 'file-saver';
 
 @Component({
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   selectedFile: File;
   userProfileImage: File;
   previewImgURL: any;
+  followersCount: number;
 
   constructor(
       private tokenService: TokenStorageService,
@@ -28,7 +30,8 @@ export class ProfileComponent implements OnInit {
       private dialog: MatDialog,
       private notificationService: NotificationService,
       private imageService: ImageUploadService,
-      private userService: UserService
+      private userService: UserService,
+      private followerService: FollowerService,
     ) {}
 
   ngOnInit(): void {
@@ -36,12 +39,19 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         this.user = data;
         this.isUserDataLoaded = true;
+
+        this.followerService.countFollow(this.user.userId).subscribe(resp => {
+          this.followersCount = resp;
+          console.log('followersCount:', this.followersCount);
+        });
       });
 
     this.imageService.getProfileImage()
       .subscribe(data => {
         this.userProfileImage = data.imageBytes;
       });
+
+
   }
 
   onFileSelected(event): void {

@@ -25,7 +25,6 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 import { FavouritesComponent } from './layout/favourites/favourites.component';
 import { AdminComponent } from './auth/admin/admin.component';
-import {AdminService} from './helper/admin.service';
 
 @NgModule({
   declarations: [
