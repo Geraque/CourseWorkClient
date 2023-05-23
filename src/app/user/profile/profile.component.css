@@ -1,26 +1,31 @@
-  .user-profile {
-    display: block;
-    margin: 0 auto;
-    width: 60%;
-    text-align: center;
-    padding-top: 3rem;
-  }
+.user-profile {
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+  text-align: center;
+  padding-top: 3rem;
+}
 
-  .profile-image {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2rem;
-  }
+.profile-image {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
 
-  .is-saved {
-    color: green;
-    background-color: #f1f1f1;
-  }
+.is-saved {
+  color: green;
+  background-color: #f1f1f1;
+}
 
-  .not-saved {
-    color: #3f51b5;
-  }
+.not-saved {
+  color: #3f51b5;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

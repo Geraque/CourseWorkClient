@@ -1,9 +1,9 @@
 <div *ngIf="isUserDataLoaded" class="user-profile">
 
   <h1>Profile</h1>
-  <div style="text-align: right">
+  <div class="button-container">
     <button mat-flat-button color="primary" (click)="openEditDialog()">Edit Info</button>
-    <mat-flat-button color="primary" (click)="downloadStats()">Download Stats</mat-flat-button>
+    <button mat-flat-button color="primary" (click)="downloadStats()">Download Stats</button>
   </div>
 
   <div style="padding-top: 2rem" class="row">
