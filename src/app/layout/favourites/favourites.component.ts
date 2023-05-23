@@ -53,6 +53,11 @@ ngOnInit(): void {
             this.checkIfRecipeIsSaved(recipe.recipeId);
           });
         });
+  this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
+    categories.forEach((category) => {
+      this.categoryNames[category.categoryId] = category.categoryName;
+    });
+  });
     });
 }
 

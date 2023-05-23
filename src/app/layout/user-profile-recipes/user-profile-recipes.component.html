@@ -1,4 +1,4 @@
-<div *ngIf="isUserRecipesLoaded" xmlns="http://www.w3.org/1999/html">
+<div *ngIf="isUserRecipesLoaded || isCategoriesLoaded" xmlns="http://www.w3.org/1999/html">
 
   <h2>{{recipes.length}} Recipes</h2>
 
@@ -7,11 +7,19 @@
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{recipe.recipeName}}</mat-card-title>
     </mat-card-header>
+    <div id="category" *ngFor="let categoryId of recipe.categoryIds" style="margin-right: 9px;">
+      {{ categoryNames[categoryId] }}
+    </div>
     <img mat-card-image [src]="formatImage(recipe.image)" alt="recipe image">
     <mat-card-content>
-      <p>
-        {{recipe.description}}
-      </p>
+      <p>{{recipe.description}}</p>
+      <button mat-button (click)="toggleNutritionPanel(recipe.recipeId)">Показать/скрыть информацию о питательных веществах</button>
+      <div *ngIf="showNutritionPanel[recipe.recipeId]" class="nutrition-panel">
+        <p>Калории: {{recipe.recipeNutrition.calories}}</p>
+        <p>Углеводы: {{recipe.recipeNutrition.carbs}}</p>
+        <p>Жиры: {{recipe.recipeNutrition.fat}}</p>
+        <p>Белки: {{recipe.recipeNutrition.proteins}}</p>
+      </div>
     </mat-card-content>
 
     <div style="text-align: left">

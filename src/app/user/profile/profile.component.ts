@@ -7,7 +7,7 @@ import {NotificationService} from '../../service/notification.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {UserService} from '../../service/user.service';
 import {EditUserComponent} from '../edit-user/edit-user.component';
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-profile',
@@ -22,13 +22,14 @@ export class ProfileComponent implements OnInit {
   userProfileImage: File;
   previewImgURL: any;
 
-  constructor(private tokenService: TokenStorageService,
-              private recipeService: RecipeService,
-              private dialog: MatDialog,
-              private notificationService: NotificationService,
-              private imageService: ImageUploadService,
-              private userService: UserService) {
-  }
+  constructor(
+      private tokenService: TokenStorageService,
+      private recipeService: RecipeService,
+      private dialog: MatDialog,
+      private notificationService: NotificationService,
+      private imageService: ImageUploadService,
+      private userService: UserService
+    ) {}
 
   ngOnInit(): void {
     this.userService.getCurrentUser()

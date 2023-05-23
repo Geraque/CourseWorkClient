@@ -31,6 +31,8 @@
         <mat-icon>bookmark</mat-icon>{{ isSaved[recipe.recipeId] ? 'Удалить из коллекции' : 'Сохранить рецепт' }}
       </button>
     </mat-card-actions>
+    <mat-card-subtitle align="start">Likes: {{recipe.likes}} <span *ngIf="recipe.likes > 0">by {{recipe.usersLiked}}</span></mat-card-subtitle>
+
 
     <div style="text-align: left">
       <p *ngFor="let comment of recipe.comments"><span style="font-weight: 500">{{comment.username}}</span>: {{comment.commentText}}</p>

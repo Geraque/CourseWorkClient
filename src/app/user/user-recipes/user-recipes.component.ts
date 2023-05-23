@@ -1,9 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/Recipe';
+import {Category} from '../../models/Category';
+import {User} from '../../models/User';
+import {NotificationService} from '../../service/notification.service';
+import {UserService} from '../../service/user.service';
 import {RecipeService} from '../../service/recipe.service';
 import {ImageUploadService} from '../../service/image-upload.service';
 import {CommentService} from '../../service/comment.service';
-import {NotificationService} from '../../service/notification.service';
+import {SaveRecipeService} from '../../service/save-recipe.service';
+import {CategoryService} from '../../service/category.service';
 
 @Component({
   selector: 'app-user-recipes',
@@ -12,14 +17,22 @@ import {NotificationService} from '../../service/notification.service';
 })
 export class UserRecipesComponent implements OnInit {
 
+  isCategoriesLoaded = false;
   isUserRecipesLoaded = false;
-  recipes: Recipe [];
+  recipes: Recipe[];
+  user: User;
+  username: string;
+  isSaved: {[key: number]: boolean} = {};
+  categoryNames: {[key: number]: string} = {};
+  showNutritionPanel: {[key: number]: boolean} = {};
 
-  constructor(private recipeService: RecipeService,
-              private imageService: ImageUploadService,
-              private commentService: CommentService,
-              private notificationService: NotificationService) {
-  }
+constructor(private userService: UserService,
+            private recipeService: RecipeService,
+            private imageService: ImageUploadService,
+            private commentService: CommentService,
+            private notificationService: NotificationService,
+            private saveRecipeService: SaveRecipeService,
+            private categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.recipeService.getRecipeForCurrentUser()
@@ -28,8 +41,17 @@ export class UserRecipesComponent implements OnInit {
         this.recipes = data;
         this.getImagesToRecipes(this.recipes);
         this.getCommentsToRecipes(this.recipes);
+        this.getCategoriesToRecipes(this.recipes);
         this.isUserRecipesLoaded = true;
       });
+
+    this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
+      categories.forEach((category) => {
+        this.categoryNames[category.categoryId] = category.categoryName;
+        console.log('categoryName:',category.categoryName)
+      });
+      this.isCategoriesLoaded = true; // добавить эту строку
+    });
   }
 
   getImagesToRecipes(recipes: Recipe[]): void {
@@ -47,6 +69,15 @@ export class UserRecipesComponent implements OnInit {
       this.commentService.getCommentsToRecipe(p.recipeId)
         .subscribe(data => {
           p.comments = data;
+        });
+    });
+  }
+
+  getCategoriesToRecipes(recipes: Recipe[]): void {
+    recipes.forEach(recipe => {
+      this.categoryService.getCategoriesByRecipeId(recipe.recipeId)
+        .subscribe(categories => {
+          recipe.categoryIds = categories.map(category => category.categoryId);
         });
     });
   }
@@ -78,6 +109,14 @@ export class UserRecipesComponent implements OnInit {
         this.notificationService.showSnackBar('Comment removed');
         recipe.comments.splice(commentIndex, 1);
       });
+  }
+
+  toggleNutritionPanel(recipeId: number): void {
+    if (this.showNutritionPanel[recipeId]) {
+      this.showNutritionPanel[recipeId] = false;
+    } else {
+      this.showNutritionPanel[recipeId] = true;
+    }
   }
 
 }

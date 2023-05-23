@@ -122,6 +122,7 @@ ngOnInit(): void {
      this.isSaved[recipeId] = resp;
    });
  }
+
  onFollowButtonClick(recipeId: number) {
    if (this.isSaved[recipeId]) {
      this.saveRecipeService.deleteRecipe(this.user.userId, recipeId).subscribe(() => {

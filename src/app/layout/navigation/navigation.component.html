@@ -21,8 +21,8 @@
 
   <h3 *ngIf="isDataLoaded">{{this.user.firstname}} {{this.user.lastname}}</h3>
 
-  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button>
-    <mat-icon color="accent">account_box</mat-icon>
+  <button *ngIf="isLoggedIn" [matMenuTriggerFor]="menu" matTooltip="Profile" mat-icon-button class="profile-button">
+    <img class="profile-image" [src]="previewImgURL || formatImage(userProfileImage) || 'https://i.pinimg.com/originals/2c/0c/7e/2c0c7e4fb33f0d39f3c7573edc0cb68e.jpg'" alt="user image">
   </button>
   <mat-menu id="menu-item" #menu="matMenu">
     <button mat-menu-item routerLink="/profile">Profile</button>
