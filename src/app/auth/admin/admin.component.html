@@ -1,4 +1,4 @@
-<div class="register-page">
+<div *ngIf="isUserDataLoaded" class="register-page">
   <h2>Register</h2>
   <p>Already have an account?  <a routerLink="/login">Sign in</a></p>
   <form [formGroup]="registerForm">

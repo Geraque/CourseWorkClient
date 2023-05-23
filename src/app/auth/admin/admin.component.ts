@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../../models/User';
 import {AuthService} from '../../service/auth.service';
 import {TokenStorageService} from '../../service/token-storage.service';
 import {NotificationService} from '../../service/notification.service';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,17 +15,38 @@ import {NotificationService} from '../../service/notification.service';
 export class AdminComponent {
 
   public registerForm: FormGroup;
+  isUserDataLoaded = false;
+  user: User;
+  check = false;
 
   constructor(
     private authService: AuthService,
     private notificationService: NotificationService,
+    private router: Router,
+    private userService: UserService,
     private fb: FormBuilder
   ) {
   }
 
-  ngOnInit(): void {
-    this.registerForm = this.createRegisterForm();
-  }
+ngOnInit(): void {
+  console.log(this.check)
+  this.registerForm = this.createRegisterForm();
+
+  this.userService.getCurrentUser()
+    .subscribe(data => {
+      this.user = data;
+      this.isUserDataLoaded = true;
+
+      this.userService.isAdmin(this.user.userId)
+        .subscribe(data => {
+          this.check = data;
+          console.log(this.check);
+          if(!this.check){
+            this.router.navigate(['main']);
+          }
+        });
+    });
+}
 
   createRegisterForm(): FormGroup {
     return this.fb.group({

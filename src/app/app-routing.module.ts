@@ -29,7 +29,7 @@ const routes: Routes = [
       {path: '', component: UserProfileRecipesComponent, canActivate: [AuthGuardService]}
     ]
    },
-   { path: 'admin', component: AdminComponent, canActivate: [AdminService] },
+   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService] },
   {path: '', redirectTo: 'main', pathMatch: 'full'}
   ];
 
