@@ -23,6 +23,10 @@ export class UserService {
     return this.http.post(USER_API + 'update', user);
   }
 
+  updateUserByAdmin(user: any): Observable<any> {
+    return this.http.post(USER_API + 'updateByAdmin', user);
+  }
+
   getUserByUsername(username: string):Observable<any> {
     return this.http.post(USER_API +'get/'+ username,null);
   }

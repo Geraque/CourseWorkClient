@@ -21,10 +21,12 @@ export class UserProfileRecipesComponent implements OnInit {
   isUserRecipesLoaded = false;
   recipes: Recipe[];
   user: User;
+  myId: string;
   username: string;
   isSaved: {[key: number]: boolean} = {};
   categoryNames: {[key: number]: string} = {};
   showNutritionPanel: {[key: number]: boolean} = {};
+  isAdmin: boolean = false;
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
@@ -37,6 +39,12 @@ export class UserProfileRecipesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getCurrentUser()
+      .subscribe(data => {
+        this.myId = data.userId;
+        this.checkAdminStatus(Number(this.myId));
+      });
+
     this.route.params.subscribe(params => {
       this.username = params['username'];
       this.userService.getUserByUsername(this.username)
@@ -49,9 +57,16 @@ export class UserProfileRecipesComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
       categories.forEach((category) => {
         this.categoryNames[category.categoryId] = category.categoryName;
-        console.log('categoryName:',category.categoryName)
       });
       this.isCategoriesLoaded = true; // добавить эту строку
+    });
+  }
+
+  checkAdminStatus(userId: number) {
+    this.userService.isAdmin(userId).subscribe(res => {
+      if (res) {
+        this.isAdmin = res;
+      }
     });
   }
 
@@ -85,7 +100,6 @@ export class UserProfileRecipesComponent implements OnInit {
     });
   }
 
-
   getCommentsToRecipes(recipes: Recipe[]): void {
     recipes.forEach(p => {
       this.commentService.getCommentsToRecipe(p.recipeId)
@@ -96,7 +110,6 @@ export class UserProfileRecipesComponent implements OnInit {
   }
 
   removeRecipe(recipe: Recipe, index: number): void {
-    console.log(recipe);
     const result = confirm('Do you really want to delete this recipe?');
     if (result) {
       this.recipeService.deleteRecipe(recipe.recipeId)

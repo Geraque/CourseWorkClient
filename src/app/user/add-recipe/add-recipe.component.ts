@@ -94,7 +94,7 @@ export class AddRecipeComponent implements OnInit {
   addCategoryToRecipe(): void {
   console.log(this.isRecipeCreated);
   console.log(this.createdRecipe);
-  console.log(this.createdRecipe.recipeId);
+  console.log(this.createdRecipe.recipeId); //удалить эту строчку для срабатыванияоповещения
     if (this.createdRecipe && this.createdRecipe.recipeId != null) {
       this.categoryService.addCategory(this.selectedCategory, this.createdRecipe.recipeId).subscribe(() => {
         this.notificationService.showSnackBar('Category added successfully');

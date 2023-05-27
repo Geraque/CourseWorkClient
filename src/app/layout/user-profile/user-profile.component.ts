@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {UserProfileEditUserComponent} from '../user-profile-edit-user/user-profile-edit-user.component';
 import {User} from '../../models/User';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute} from '@angular/router';
@@ -18,10 +20,12 @@ export class UserProfileComponent implements OnInit {
   previewImgURL: any;
   myId: string;
   isFollowing: boolean;
-  followersCount: number;
+  followersCount = 0;
+  isAdmin: boolean = false;
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
               private imageService: ImageUploadService,
               private followerService: FollowerService,) {}
 
@@ -30,7 +34,9 @@ export class UserProfileComponent implements OnInit {
     .subscribe(data => {
       this.myId = data.userId;
       this.isUserDataLoaded = true;
+      this.checkAdminStatus(Number(this.myId));
     });
+
 
   this.route.params.subscribe(params => {
     this.userService.getUserByUsername(params['username']).subscribe(data => {
@@ -52,10 +58,27 @@ export class UserProfileComponent implements OnInit {
       this.followerService.countFollow(this.user.userId).subscribe(resp => {
         this.followersCount = resp;
         console.log('followersCount:', this.followersCount);
-          });
+        });
       this.isUserDataLoaded = true;
         });
       });
+    });
+  }
+
+  openEditDialog(): void {
+    const dialogUserEditConfig = new MatDialogConfig();
+    dialogUserEditConfig.width = '400px';
+    dialogUserEditConfig.data = {
+      user: this.user
+    };
+    this.dialog.open(UserProfileEditUserComponent, dialogUserEditConfig);
+  }
+
+  checkAdminStatus(userId: number) {
+    this.userService.isAdmin(userId).subscribe(res => {
+      if (res) {
+        this.isAdmin = res;
+      }
     });
   }
 

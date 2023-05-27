@@ -1,0 +1,25 @@
+<div>
+  <h2>Edit User Profile</h2>
+  <form [formGroup]="profileEditForm">
+    <mat-form-field style="margin:10px" class="w-100" appearance="outline">
+      <mat-label>First name</mat-label>
+      <input matInput
+             formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field style="margin:10px" class="w-100" appearance="outline">
+      <mat-label>Last name</mat-label>
+      <input matInput
+             formControlName="lastName">
+    </mat-form-field>
+
+    <div style="margin:10px" class="row">
+      <button (click)="closeDialog()" class="w-50 mb-2"
+              mat-button mat-dialog-close disableRipple>
+        Cancel
+      </button>
+      <button color="primary" class="w-50 mb-2" [disabled]="profileEditForm.invalid" (click)="submit()" mat-button disableRipple>
+        Update
+      </button>
+    </div>
+  </form>
+</div>

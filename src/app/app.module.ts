@@ -25,6 +25,7 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
 import { UserProfileRecipesComponent } from './layout/user-profile-recipes/user-profile-recipes.component';
 import { FavouritesComponent } from './layout/favourites/favourites.component';
 import { AdminComponent } from './auth/admin/admin.component';
+import { UserProfileEditUserComponent } from './layout/user-profile-edit-user/user-profile-edit-user.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AdminComponent } from './auth/admin/admin.component';
     UserProfileRecipesComponent,
     FavouritesComponent,
     AdminComponent,
+    UserProfileEditUserComponent,
   ],
   imports: [
     BrowserModule,
